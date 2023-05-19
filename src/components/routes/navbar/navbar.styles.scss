@@ -1,0 +1,15 @@
+.nav__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    .logo__container {
+        width: 70px;
+    }
+
+    .nav__links__container {
+        width: 50%;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
