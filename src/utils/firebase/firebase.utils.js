@@ -2,10 +2,10 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth"
+import { GoogleAuthProvider, getAuth, signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth"
 // Your web app's Firebase configuration
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore"
-import { useRef } from "react";
+
 const firebaseConfig = {
     apiKey: "AIzaSyBILDvRpAObSygIVs_TeL5-0H42PF-Wak8",
     authDomain: "crown-clothing-87fae.firebaseapp.com",
@@ -30,8 +30,8 @@ export const signInWithGoogleAuth = async () => {
 }
 
 // handle documents
-
-export const createUserDocFromAuth = async (userAuth) => {
+// this function just creates a user entry inside the db. It has nothing to do with the auth. 
+export const createUserDocFromAuth = async (userAuth, additionalProps) => {
     const docRef = doc(db, "users", userAuth.uid)
     console.log("🚀 ~ file: firebase.utils.js:35 ~ createUserDocFromAuth ~ docRef:", docRef)
     const docSnapShot = await getDoc(docRef)
@@ -42,7 +42,7 @@ export const createUserDocFromAuth = async (userAuth) => {
         const createdAt = new Date()
         try {
             await setDoc(docRef, {
-                displayName, email, createdAt
+                displayName, email, createdAt, ...additionalProps
             })
 
         } catch (error) {
@@ -54,25 +54,8 @@ export const createUserDocFromAuth = async (userAuth) => {
 
 }
 
-export const createUserDocWithEmailAndPassword = async (formFields) => {
-    console.log("user creation")
-    const { email, displayName, password } = formFields
-    const docRef = doc(db, "users", email)
-    console.log("🚀 ~ file: firebase.utils.js:60 ~ createUserDocWithEmailAndPassword ~ docRef:", docRef)
-    const docSnapShot = await getDoc(docRef)
-    console.log("🚀 ~ file: firebase.utils.js:62 ~ createUserDocWithEmailAndPassword ~ docSnapShot:", docSnapShot.exists())
-    if (!docSnapShot.exists()) {
-        const createdAt = new Date()
-        try {
-            await setDoc(docRef, {
-                displayName,
-                email,
-                password,
-                createdAt
-            })
-        } catch (error) {
-            console.log(error.message)
-        }
-    }
-    else return docRef
+// create user from email and password. It will actually add the user to the auth. 
+export const createUserAuthWithEmailAndPassword = async (email, password) => {
+    if(!email || !password) return 
+    return await createUserWithEmailAndPassword(auth,email, password)
 }
