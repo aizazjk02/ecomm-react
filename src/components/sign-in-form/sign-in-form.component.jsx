@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {  createUserDocFromAuth, signInAuthUserWithEmailAndPassword, signInWithGoogleAuth} from "../../utils/firebase/firebase.utils"
+import { createUserDocFromAuth, signInAuthUserWithEmailAndPassword, signInWithGoogleAuth } from "../../utils/firebase/firebase.utils"
 import Button from "../button/button.component"
 import FormInput from "../form-input/form-input.component"
 import "./sign-in-form.styles.scss"
@@ -15,7 +15,6 @@ const initialFormFields = {
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(initialFormFields)
     const { email, password } = formFields
-
     const handleOnChange = (e) => {
         const { id, value } = e.target
         setFormFields({ ...formFields, [id]: value })
@@ -26,12 +25,13 @@ const SignInForm = () => {
         try {
             const { user } = await signInAuthUserWithEmailAndPassword(email, password)
             console.log("🚀 ~ file: sign-in-form.component.jsx:27 ~ handleSubmit ~ user:", user)
-            
+            // setCurrentUser(user)
+
         } catch (error) {
             console.log("🚀 ~ file: sign-in-form.component.jsx:31 ~ handleSubmit ~ error:", error)
-            
+
         }
-        
+
 
     }
 

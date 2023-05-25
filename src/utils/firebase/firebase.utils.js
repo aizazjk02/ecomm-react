@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { GoogleAuthProvider, getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
+import { GoogleAuthProvider, getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"
 // Your web app's Firebase configuration
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore"
 
@@ -25,6 +25,10 @@ googleAuthProvider.setCustomParameters({
     prompt: "select_account"
 })
 
+
+/**
+ * ? Functions related to authentcation ...
+ */
 export const signInWithGoogleAuth = async () => {
     return await signInWithPopup(auth, googleAuthProvider)
 }
@@ -64,3 +68,7 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
     if (!email || !password) return
     return await signInWithEmailAndPassword(auth,email,password)
 }
+
+export const signOutUser = async () => await signOut(auth)
+
+export const onAuthStateChangedListner = (callback) => onAuthStateChanged(auth, callback)
