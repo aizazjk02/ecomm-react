@@ -3,15 +3,19 @@ import { createUserAuthWithEmailAndPassword, createUserDocFromAuth } from "../..
 import Button from "../button/button.component"
 import FormInput from "../form-input/form-input.component"
 import "./sign-up-form.styles.scss"
+
+// Default formfields 
 const initialFormFields = {
     "displayName": "",
     "email": "",
     "password": "",
     "confirmPassword": ""
 }
+
 const SignUpForm = () => {
     const [formFields, setFormFields] = useState(initialFormFields)
     const { displayName, email, password, confirmPassword } = formFields
+    
     const handleOnChange = (e) => {
         const { id, value } = e.target
         setFormFields({ ...formFields, [id]: value })

@@ -1,8 +1,8 @@
 .sign-up-form__container {
     display: flex;
     flex-direction: column;
-    max-width: 380px;
-
+    width: 380px;
+    // flex: 1 1 auto;
     h2 {
         margin: 10px 0;
     }

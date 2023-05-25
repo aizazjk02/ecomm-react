@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { GoogleAuthProvider, getAuth, signInWithPopup, createUserWithEmailAndPassword } from "firebase/auth"
+import { GoogleAuthProvider, getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 // Your web app's Firebase configuration
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore"
 
@@ -58,4 +58,9 @@ export const createUserDocFromAuth = async (userAuth, additionalProps) => {
 export const createUserAuthWithEmailAndPassword = async (email, password) => {
     if(!email || !password) return 
     return await createUserWithEmailAndPassword(auth,email, password)
+}
+
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) return
+    return await signInWithEmailAndPassword(auth,email,password)
 }
