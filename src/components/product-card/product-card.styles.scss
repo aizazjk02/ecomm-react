@@ -5,7 +5,7 @@
 	height: 350px;
 	align-items: center;
 	position: relative;
-    // flex: 1 1 300px;
+    
 
 	img {
 		width: 100%;
@@ -20,6 +20,10 @@
 		position: absolute;
 		top: 255px;
 		display: none;
+
+		&:active {
+			transform: scale(.9);
+		}
 	}
 	&:hover {
 		img {
@@ -27,6 +31,7 @@
 		}
 
 		button {
+			
 			opacity: 0.85;
 			display: flex;
 		}
