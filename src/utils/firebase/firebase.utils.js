@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { GoogleAuthProvider, getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"
 // Your web app's Firebase configuration
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore"
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs} from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: "AIzaSyBILDvRpAObSygIVs_TeL5-0H42PF-Wak8",
@@ -56,6 +56,51 @@ export const createUserDocFromAuth = async (userAuth, additionalProps) => {
     }
     else return docRef
 
+}
+
+/**
+ * ! Function to add product data to firebase db 
+ */
+
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = collection(db, collectionKey)
+
+    const batch = writeBatch(db)
+
+    objectsToAdd.forEach(object => {
+        const docRef = doc(collectionRef, object.title.toLowerCase())
+        batch.set(docRef, object)
+    })
+
+    await batch.commit()
+    console.log("Done!")
+
+}
+
+/**
+ * ? Function to get the categories object / map 
+ */
+
+export const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(db, "categories")
+    const q = query(collectionRef)
+
+    const querySnapshot = await getDocs(q)
+    const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const { title, items } = docSnapshot.data()
+        acc[title.toLowerCase()] = items
+        return acc
+    }, {})
+    
+    return categoryMap 
+
+    /**
+     * {
+     *  hats : {
+     *  items 
+     * }
+     * }
+     */
 }
 
 // create user from email and password. It will actually add the user to the auth. 

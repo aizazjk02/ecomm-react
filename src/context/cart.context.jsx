@@ -62,7 +62,7 @@ export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([])
     const [cartItemsCount, setCartItemsCount] = useState(0)
     const [cartTotal, setCartTotal] = useState(0)
-    console.log("🚀 ~ file: cart.context.jsx:21 ~ CartProvider ~ cartItems:", cartItems)
+    // console.log("🚀 ~ file: cart.context.jsx:21 ~ CartProvider ~ cartItems:", cartItems)
 
     useEffect(() => {
         setCartItemsCount(calculateCartItemsCount(cartItems))
