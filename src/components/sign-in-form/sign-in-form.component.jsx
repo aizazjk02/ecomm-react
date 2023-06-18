@@ -3,7 +3,7 @@ import { createUserDocFromAuth, signInAuthUserWithEmailAndPassword, signInWithGo
 import Button from "../button/button.component"
 import FormInput from "../form-input/form-input.component"
 import "./sign-in-form.styles.scss"
-
+import { useNavigate } from "react-router-dom"
 // Default formfields 
 const initialFormFields = {
 
@@ -15,6 +15,7 @@ const initialFormFields = {
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(initialFormFields)
     const { email, password } = formFields
+    const navigate = useNavigate()
     const handleOnChange = (e) => {
         const { id, value } = e.target
         setFormFields({ ...formFields, [id]: value })
@@ -23,12 +24,11 @@ const SignInForm = () => {
 
     const handleSubmit = async () => {
         try {
-            const { user } = await signInAuthUserWithEmailAndPassword(email, password)
-            console.log("🚀 ~ file: sign-in-form.component.jsx:27 ~ handleSubmit ~ user:", user)
-            // setCurrentUser(user)
-
+            await signInAuthUserWithEmailAndPassword(email, password)
+            setFormFields(initialFormFields)
+            navigate("/")
         } catch (error) {
-            console.log("🚀 ~ file: sign-in-form.component.jsx:31 ~ handleSubmit ~ error:", error)
+            
 
         }
 
@@ -36,9 +36,14 @@ const SignInForm = () => {
     }
 
     const signInWithGoogle = async () => {
-        const { user } = await signInWithGoogleAuth()
-        console.log("🚀 ~ file: sign-in.component.jsx:5 ~ signInWithGoogle ~ userAuth:", user)
-        await createUserDocFromAuth(user)
+        try {
+            const { user } = await signInWithGoogleAuth()
+            console.log("🚀 ~ file: sign-in.component.jsx:5 ~ signInWithGoogle ~ userAuth:", user)
+            await createUserDocFromAuth(user)
+            navigate("/")
+        } catch (error) {
+            
+        }
     }
     return (
         <div className="sign-up-form__container">

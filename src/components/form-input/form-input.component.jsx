@@ -5,7 +5,7 @@ const FormInput = ({ label, inputOptions }) => {
             <input className="form-input" {...inputOptions} />
             {
                 label &&
-                <label className={`${inputOptions.value.length ? "shrink" : null} form-input-label`} htmlFor={inputOptions.id}>{label}</label>
+                <label className={`${inputOptions?.value?.length ? "shrink" : null} form-input-label`} htmlFor={inputOptions.id}>{label}</label>
             }
         </div>
     )

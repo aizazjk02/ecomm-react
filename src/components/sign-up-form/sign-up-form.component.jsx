@@ -4,7 +4,7 @@ import { createUserAuthWithEmailAndPassword, createUserDocFromAuth } from "../..
 import Button from "../button/button.component"
 import FormInput from "../form-input/form-input.component"
 import "./sign-up-form.styles.scss"
-
+import { useNavigate } from "react-router-dom"
 // Default formfields 
 const initialFormFields = {
     "displayName": "",
@@ -16,7 +16,7 @@ const initialFormFields = {
 const SignUpForm = () => {
     const [formFields, setFormFields] = useState(initialFormFields)
     const { displayName, email, password, confirmPassword } = formFields
-    
+    const navigate = useNavigate()
     const handleOnChange = (e) => {
         const { id, value } = e.target
         setFormFields({ ...formFields, [id]: value })
@@ -34,7 +34,7 @@ const SignUpForm = () => {
             await createUserDocFromAuth(user, { displayName })
             
             setFormFields(initialFormFields)
-
+            navigate("/")
         } catch (error) {
 
             switch (error.code) {

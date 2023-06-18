@@ -1,0 +1,34 @@
+.shipping__address {
+    &__container {
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        // width: 600px;
+        gap: 20px;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 600px;
+        .form__input__container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            label {
+                font-size: 1.2rem;
+                
+            }
+            input, select {
+                padding: 10px;
+            }
+        }
+    }
+
+
+}
+

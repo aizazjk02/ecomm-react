@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { GoogleAuthProvider, getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth"
 // Your web app's Firebase configuration
-import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs} from "firebase/firestore"
+import { getFirestore, doc, getDoc, setDoc, collection, writeBatch, query, getDocs, addDoc } from "firebase/firestore"
 
 const firebaseConfig = {
     apiKey: "AIzaSyBILDvRpAObSygIVs_TeL5-0H42PF-Wak8",
@@ -30,7 +30,19 @@ googleAuthProvider.setCustomParameters({
  * ? Functions related to authentcation ...
  */
 export const signInWithGoogleAuth = async () => {
-    return await signInWithPopup(auth, googleAuthProvider)
+    try {
+
+        return await signInWithPopup(auth, googleAuthProvider)
+    } catch (error) {
+        switch (error.code) {
+            case "auth/wrong-password": alert("Invalid password!")
+                return
+            case "auth/user-not-found": alert("User does not exists!")
+                return
+            default: alert("something went wrong, please try again!")
+                return
+        }
+    }
 }
 
 // handle documents
@@ -77,6 +89,23 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
 
 }
 
+export const addOrder = async (shippingAddress, uid, products, orderTotal) => {
+    const userRef = doc(db, "users", uid)
+    const orderRef = collection(userRef, "orders")
+    // const docSnapShot = await getDoc(docRef)
+    try {
+        await addDoc(orderRef, {
+            shippingAddress: { ...shippingAddress },
+            products: [...products],
+            orderTotal,
+        })
+        return true
+    } catch (error) {
+        alert("Something went wrong")
+        return false
+    }
+
+}
 /**
  * ? Function to get the categories object / map 
  */
@@ -91,8 +120,8 @@ export const getCategoriesAndDocuments = async () => {
         acc[title.toLowerCase()] = items
         return acc
     }, {})
-    
-    return categoryMap 
+
+    return categoryMap
 
     /**
      * {
@@ -105,13 +134,37 @@ export const getCategoriesAndDocuments = async () => {
 
 // create user from email and password. It will actually add the user to the auth. 
 export const createUserAuthWithEmailAndPassword = async (email, password) => {
-    if(!email || !password) return 
-    return await createUserWithEmailAndPassword(auth,email, password)
+    if (!email || !password) return
+    try {
+        return await createUserWithEmailAndPassword(auth, email, password)
+
+    } catch (error) {
+        switch (error.code) {
+            case "auth/email-already-in-use": alert("User already exists!")
+                return
+            case "auth/weak-password": alert("Password should be at least 6 characters.")
+                return
+            default: alert("Something went wrong! please try again.")
+                return
+        }
+    }
 }
 
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {
     if (!email || !password) return
-    return await signInWithEmailAndPassword(auth,email,password)
+    try {
+        return await signInWithEmailAndPassword(auth, email, password)
+
+    } catch (error) {
+        switch (error.code) {
+            case "auth/wrong-password": alert("Invalid password!")
+                return
+            case "auth/user-not-found": alert("User does not exists!")
+                return
+            default: alert("something went wrong, please try again!")
+                return
+        }
+    }
 }
 
 export const signOutUser = async () => await signOut(auth)

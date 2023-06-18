@@ -35,8 +35,8 @@ const Navbar = () => {
                     <Link className="nav__link" to={"/shop"}>
                         Shop
                     </Link>
-                    {currentUser ? (<span onClick={handleSignOut} className="nav__link">Sign out</span>) : (<Link className="nav__link" to={"/auth"}>
-                        Sign In
+                    {currentUser ? (<span onClick={handleSignOut} className="nav__link">logout</span>) : (<Link className="nav__link" to={"/auth"}>
+                        login
                     </Link>)}
                     <span onClick={() => handleCartDropdown()}>
                         <CartIcon />
