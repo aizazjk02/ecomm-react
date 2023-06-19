@@ -58,9 +58,18 @@
 // }
 .checkout {
 	display: flex;
+	justify-content: center;
 }
 .checkout__container {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+}
+
+@media only screen and (max-width:600px) {
+	.checkout {
+		flex-direction: column;
+		gap: 20px;
+		align-items: center;
+	}
 }
