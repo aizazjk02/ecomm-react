@@ -54,3 +54,13 @@
 		}
 	}
 }
+
+@media only screen and (max-width:600px) {
+	.product__card__container {
+		height: 500px;
+
+		button {
+			top: 80%;
+		}
+	}
+}

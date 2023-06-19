@@ -21,38 +21,44 @@ const Checkout = () => {
             navigate("/auth")
         }
         else if (!cartItems.length) navigate("/")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cartItems, currentUser])
     return (
         <>
             {
                 checkout ? (<ShippingAddress setCheckout={setCheckout} />) : (
-                    <div className="checkout__container">
-                        <div className="checkout__header">
-                            <div className="header__block">
+                    <div className="checkout">
+                        <div className="checkout__container">
+                            {
+                                /**
+                                 * <div className="checkout__header">
+                                <div className="header__block">
                                 <span>Product</span>
-                            </div>
-                            <div className="header__block">
+                                </div>
+                                <div className="header__block">
                                 <span>Description</span>
-                            </div>
-                            <div className="header__block">
+                                </div>
+                                <div className="header__block">
                                 <span>Quantity</span>
-                            </div>
-                            <div className="header__block">
+                                </div>
+                                <div className="header__block">
                                 <span>Price</span>
-                            </div>
-                            <div className="header__block">
-                                <span>Remove</span>
-                            </div>
-                        </div>
+                                </div>
+                                <div className="header__block">
+                                <span></span>
+                                </div>
+                                </div>
+                                */
+                            }
 
-                        {cartItems.map(cartItem => <CheckoutItem key={cartItem.id} cartItem={cartItem} />)}
-                        <span className="total">Total : ${cartTotal}</span>
-                        <Button onClick={handleCheckout}>Checkout</Button>
+                            {cartItems.map(cartItem => <CheckoutItem key={cartItem.id} cartItem={cartItem} />)}
+                            <span className="total">Total : ${cartTotal}</span>
+                            <Button onClick={handleCheckout}>Checkout</Button>
+                        </div>
                     </div>
                 )
             }
-        
+
         </>
     )
 }

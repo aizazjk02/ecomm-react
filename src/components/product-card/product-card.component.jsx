@@ -7,6 +7,7 @@ const ProductCard = ({ product }) => {
     const { addProductToCart } = useContext(CartContext)
     const addToCartHandler = () => {
         addProductToCart(product)
+        alert("Added to Cart!")
     }
     return (
         <div className="product__card__container" key={id}>

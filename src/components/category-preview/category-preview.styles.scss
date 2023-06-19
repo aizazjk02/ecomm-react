@@ -22,6 +22,7 @@
   @media only screen and (max-width:600px) {
     .preview {
       grid-template-columns: repeat(1,1fr);
+      
       row-gap: 20px;
     }
   }
