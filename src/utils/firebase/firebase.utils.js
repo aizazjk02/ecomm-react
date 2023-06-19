@@ -34,14 +34,14 @@ export const signInWithGoogleAuth = async () => {
 
         return await signInWithPopup(auth, googleAuthProvider)
     } catch (error) {
-        switch (error.code) {
-            case "auth/wrong-password": alert("Invalid password!")
-                return
-            case "auth/user-not-found": alert("User does not exists!")
-                return
-            default: alert("something went wrong, please try again!")
-                return
-        }
+        // switch (error.code) {
+        //     case "auth/wrong-password": alert("Invalid password!")
+        //         return
+        //     case "auth/user-not-found": alert("User does not exists!")
+        //         return
+        //     default: alert("something went wrong, please try again!")
+        //         return
+        // }
     }
 }
 
