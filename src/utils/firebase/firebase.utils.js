@@ -98,12 +98,26 @@ export const addOrder = async (shippingAddress, uid, products, orderTotal) => {
             shippingAddress: { ...shippingAddress },
             products: [...products],
             orderTotal,
+            createdAt: new Date()
         })
         return true
     } catch (error) {
         alert("Something went wrong")
         return false
     }
+
+}
+
+export const getOrders = async (uid) => {
+    // const userRef = doc(db, "users", uid)
+    const orders = []
+    const orderQuery = query(collection(db, `users/${uid}/orders`))
+    const orderSnaps = await getDocs(orderQuery)
+    orderSnaps?.forEach(orderSnap => {
+        orders.push({ ...orderSnap.data(), id : orderSnap.id })
+    })
+    // console.log(orders)
+    return orders
 
 }
 /**
