@@ -4,8 +4,11 @@ import Button from "../button/button.component"
 import "./shipping-address.styles.scss"
 import { useContext } from "react"
 import { CartContext } from "../../context/cart.context"
-import { UserContext } from "../../context/user.context"
+// import { UserContext } from "../../context/user.context"
 import { addOrder } from "../../utils/firebase/firebase.utils"
+
+import { useSelector } from "react-redux"
+import { selectCurrentUser } from "../../store/user/user.selector"
 const initialFormFields = {
     firstName: "",
     lastName: "",
@@ -18,7 +21,8 @@ const initialFormFields = {
 }
 
 const ShippingAddress = ({setCheckout}) => {
-    const { currentUser } = useContext(UserContext)
+    // const { currentUser } = useContext(UserContext)
+    const currentUser = useSelector(selectCurrentUser)
     const {cartItems, cartTotal, clearCart} = useContext(CartContext)
     const [formFields, setFormFields] = useState(initialFormFields)
     const { firstName, lastName, address, city, state, pinCode, phoneNumber, paymentMethod } = formFields
@@ -26,7 +30,7 @@ const ShippingAddress = ({setCheckout}) => {
     const handleOrder = async (e) => {
         e.preventDefault()
         await addOrder(formFields, currentUser.uid, cartItems, cartTotal).then(result => {
-            // if(result) clearCart()
+            if(result) clearCart()
             setOrderStatus(result)
         })
     }

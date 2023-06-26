@@ -1,11 +1,16 @@
 import Button from "../../button/button.component"
 import "./orders.styles.scss"
-import { useContext, useEffect } from "react"
-import { UserContext } from "../../../context/user.context"
-import { useNavigate } from "react-router-dom"
+// import { useContext, useEffect } from "react"
+// import { UserContext } from "../../../context/user.context"
+// import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { selectUserOrders } from "../../../store/user/user.selector"
+
 const Orders = () => {
-    const { orders, currentUser } = useContext(UserContext)
-    const navigate = useNavigate()
+    // const { orders, currentUser } = useContext(UserContext)
+    // const currentUser = useSelector(selectCurrentUser)
+    const orders = useSelector(selectUserOrders)
+    // const navigate = useNavigate()
     const monthMap = {
         0: 'January',
         1: 'February',

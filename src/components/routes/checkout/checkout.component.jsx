@@ -7,10 +7,13 @@ import ShippingAddress from "../../shipping-address/shipping-address.component"
 import Button from "../../button/button.component"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import { UserContext } from "../../../context/user.context"
+// import { UserContext } from "../../../context/user.context"
+import { useSelector } from "react-redux"
+import { selectCurrentUser } from "../../../store/user/user.selector"
 const Checkout = () => {
     const { cartItems, cartTotal } = useContext(CartContext)
-    const { currentUser } = useContext(UserContext)
+    // const { currentUser } = useContext(UserContext)
+    const currentUser = useSelector(selectCurrentUser)
     const [checkout, setCheckout] = useState(false)
     const navigate = useNavigate()
     const handleCheckout = () => {
