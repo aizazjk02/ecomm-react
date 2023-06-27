@@ -10,8 +10,11 @@ import { useState } from "react"
 // import { UserContext } from "../../../context/user.context"
 import { useSelector } from "react-redux"
 import { selectCurrentUser } from "../../../store/user/user.selector"
+import { selectCartItems, selectCartTotal } from "../../../store/cart/cart.selectors"
 const Checkout = () => {
-    const { cartItems, cartTotal } = useContext(CartContext)
+    // const { cartItems, cartTotal } = useContext(CartContext)
+    const cartItems = useSelector(selectCartItems)
+    const cartTotal = useSelector(selectCartTotal)
     // const { currentUser } = useContext(UserContext)
     const currentUser = useSelector(selectCurrentUser)
     const [checkout, setCheckout] = useState(false)

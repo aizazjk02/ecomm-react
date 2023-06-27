@@ -34,7 +34,7 @@ const Orders = () => {
         const day = date?.getDate();
         return `${day} ${monthMap[month]} ${year}`
     }
-    
+    orders.sort((a,b) => new Date(b.createdAt?.seconds * 1000) - new Date(a.createdAt?.seconds * 1000))
     return (
         <div className="orders">
             {orders.length >=  1 ? (<h1 className="orders__heading">Your Orders</h1>) : (<h1 className="orders__heading">You dont't have any orders</h1>)}

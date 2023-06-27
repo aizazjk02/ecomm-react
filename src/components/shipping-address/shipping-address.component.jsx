@@ -2,13 +2,15 @@
 import { useState } from "react"
 import Button from "../button/button.component"
 import "./shipping-address.styles.scss"
-import { useContext } from "react"
-import { CartContext } from "../../context/cart.context"
+// import { useContext } from "react"
+// import { CartContext } from "../../context/cart.context"
 // import { UserContext } from "../../context/user.context"
 import { addOrder } from "../../utils/firebase/firebase.utils"
 
-import { useSelector } from "react-redux"
+import { useSelector , useDispatch } from "react-redux"
 import { selectCurrentUser } from "../../store/user/user.selector"
+import { selectCartItems, selectCartTotal } from "../../store/cart/cart.selectors"
+import { clearCart } from "../../store/cart/cart.actions"
 const initialFormFields = {
     firstName: "",
     lastName: "",
@@ -22,15 +24,19 @@ const initialFormFields = {
 
 const ShippingAddress = ({setCheckout}) => {
     // const { currentUser } = useContext(UserContext)
+    const dispatch = useDispatch()
     const currentUser = useSelector(selectCurrentUser)
-    const {cartItems, cartTotal, clearCart} = useContext(CartContext)
+    // const {cartItems, cartTotal, clearCart} = useContext(CartContext)
+    const cartItems = useSelector(selectCartItems)
+    const cartTotal = useSelector(selectCartTotal)
+
     const [formFields, setFormFields] = useState(initialFormFields)
     const { firstName, lastName, address, city, state, pinCode, phoneNumber, paymentMethod } = formFields
     const [orderStatus, setOrderStatus] = useState(false)
     const handleOrder = async (e) => {
         e.preventDefault()
         await addOrder(formFields, currentUser.uid, cartItems, cartTotal).then(result => {
-            if(result) clearCart()
+            // if(result) dispatch(clearCart())
             setOrderStatus(result)
         })
     }

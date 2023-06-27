@@ -1,19 +1,23 @@
 import { Outlet, Link } from "react-router-dom"
-import { useContext, useEffect } from "react"
+import { useEffect } from "react"
 // import { UserContext } from "../../../context/user.context"
 import { ReactComponent as LogoIcon } from "../../../assets/crown.svg"
 import "./navbar.styles.scss"
 import { signOutUser } from "../../../utils/firebase/firebase.utils"
 import CartIcon from "../../cart-icon/cart-icon.component"
 import CartDropdown from "../../cart-dropdown/cart-dropdown.component"
-import { CartContext } from "../../../context/cart.context"
+// import { CartContext } from "../../../context/cart.context"
 import { useSelector } from "react-redux"
 import { selectCurrentUser } from "../../../store/user/user.selector"
-
+import { useDispatch } from "react-redux"
+import { selectIsCartOpen } from "../../../store/cart/cart.selectors"
+import { setIsCartOpen } from "../../../store/cart/cart.actions"
 const Navbar = () => {
     // const { currentUser } = useContext(UserContext)
     const currentUser = useSelector(selectCurrentUser)
-    const { isCartOpen, setIsCartOpen } = useContext(CartContext)
+    // const { isCartOpen, setIsCartOpen } = useContext(CartContext)
+    const isCartOpen = useSelector(selectIsCartOpen)
+    const  dispatch = useDispatch()
     // console.log(currentUser.uid)
     const handleSignOut = async () => {
         try {
@@ -26,7 +30,7 @@ const Navbar = () => {
 
     const handleCartDropdown = () => {
         console.log("dropdown triggered")
-        setIsCartOpen(!isCartOpen)
+        dispatch(setIsCartOpen(!isCartOpen))
     }
 
     
