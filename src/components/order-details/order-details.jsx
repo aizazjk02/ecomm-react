@@ -21,8 +21,8 @@ const OrderDetails = () => {
         <div className="orderDetails">
             {order ? <>
                 <h1>Order Details : </h1>
-                <p className="orderDetails__id">order id <span>#{order?.orderId}</span></p>
-                <p className="orderDetails__date">order date <span>{order?.date}</span></p>
+                <p className="orderDetails__id">order id <span>#{orderId}</span></p>
+                <p className="orderDetails__date">order date <span>{setDate(order?.createdAt?.seconds)}</span></p>
                 <p className="orderDetails__total">order total <span>${order?.orderTotal}</span></p>
 
                 <div className="orderDetails__products__container">
