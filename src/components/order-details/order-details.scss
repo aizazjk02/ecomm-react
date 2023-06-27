@@ -84,7 +84,8 @@
     &__payment__method, &__address {
         text-transform: uppercase;
         font-weight:bold;
-
+        display: flex;
+        flex-direction: column;
         span {
             color: grey;
             font-size: .925rem;
