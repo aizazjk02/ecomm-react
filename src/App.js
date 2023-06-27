@@ -10,6 +10,7 @@ import Orders from "./components/routes/orders/orders.component";
 import { getOrders, onAuthStateChangedListner } from "./utils/firebase/firebase.utils";
 import { useDispatch } from "react-redux";
 import { setCurrentUser, setOrders } from "./store/user/user.actions";
+import OrderDetails from "./components/order-details/order-details";
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="shop/*" element={<Shop />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="orders" element={<Orders />} />
+          <Route path="orders/:orderId" element={<OrderDetails />} />
           
         </Route>
       </Routes>
