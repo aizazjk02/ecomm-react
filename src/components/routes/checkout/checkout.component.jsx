@@ -1,6 +1,6 @@
 import "./checkout.styles.scss"
-import { CartContext } from "../../../context/cart.context"
-import { useContext, useEffect } from "react"
+// import { CartContext } from "../../../context/cart.context"
+import { useEffect } from "react"
 import CheckoutItem from "../../checkout-item/checkout-item.component"
 // import PaymentForm from "../../payment-form/payment-form.component"
 import ShippingAddress from "../../shipping-address/shipping-address.component"
