@@ -3,7 +3,7 @@
 import "./checkout-item.styles.scss"
 // import { useContext } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import { addProductToCart, removeProductFromCart, clearProductFromCart } from "../../store/cart/cart.actions"
+import { addProductToCart, removeProductFromCart, clearProductFromCart } from "../../store/cart/cart.reducer"
 import { selectCartItems } from "../../store/cart/cart.selectors"
 const CheckoutItem = ({ cartItem }) => {
     // const { addProductToCart, removeProductFromCart, clearProductFromCart } = useContext(CartContext)

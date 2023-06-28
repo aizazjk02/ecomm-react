@@ -11,7 +11,7 @@ import { useSelector } from "react-redux"
 import { selectCurrentUser } from "../../../store/user/user.selector"
 import { useDispatch } from "react-redux"
 import { selectIsCartOpen } from "../../../store/cart/cart.selectors"
-import { setIsCartOpen } from "../../../store/cart/cart.actions"
+import { setIsCartOpen } from "../../../store/cart/cart.reducer"
 const Navbar = () => {
     // const { currentUser } = useContext(UserContext)
     const currentUser = useSelector(selectCurrentUser)

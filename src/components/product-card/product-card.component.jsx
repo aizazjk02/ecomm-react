@@ -4,7 +4,7 @@ import Button from "../button/button.component"
 // import { CartContext } from "../../context/cart.context"
 import { useSelector, useDispatch } from "react-redux"
 import { selectCartItems } from "../../store/cart/cart.selectors"
-import { addProductToCart } from "../../store/cart/cart.actions"
+import { addProductToCart } from "../../store/cart/cart.reducer"
 import { useState } from "react"
 import PopUp from "../pop-up/pop-up.component"
 const ProductCard = ({ product, popUpHandler }) => {

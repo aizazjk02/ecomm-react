@@ -10,7 +10,7 @@ import { addOrder } from "../../utils/firebase/firebase.utils"
 import { useSelector , useDispatch } from "react-redux"
 import { selectCurrentUser } from "../../store/user/user.selector"
 import { selectCartItems, selectCartTotal } from "../../store/cart/cart.selectors"
-import { clearCart } from "../../store/cart/cart.actions"
+import { clearCart } from "../../store/cart/cart.reducer"
 const initialFormFields = {
     firstName: "",
     lastName: "",
@@ -36,7 +36,7 @@ const ShippingAddress = ({setCheckout}) => {
     const handleOrder = async (e) => {
         e.preventDefault()
         await addOrder(formFields, currentUser.uid, cartItems, cartTotal).then(result => {
-            // if(result) dispatch(clearCart())
+            if(result) dispatch(clearCart())
             setOrderStatus(result)
         })
     }

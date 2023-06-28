@@ -1,18 +1,52 @@
-const initialState = {
-    isCartOpen: false, 
-    cartItems: [], 
+// import { cartActionTypes } from "./cart.reducer"
+import { createSlice } from "@reduxjs/toolkit"
+
+const addCartItem = (cartItems, productToAdd) => {
+    const existingCartItem = cartItems.find(cartItem => cartItem.id === productToAdd.id)
+    if (existingCartItem)
+        return cartItems.map(cartItem => cartItem.id === productToAdd.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem)
+    return [...cartItems, { ...productToAdd, quantity: 1 }]
 }
 
-export const cartActionTypes = {
-    set_cart_items: "set_cart_items",
-    set_isCart_open: "set_isCart_open"
-}
 
-export const cartReducer = (state = initialState, action) => {
-    const { type, payload } = action 
-    switch (type) {
-        case cartActionTypes.set_cart_items: return { ...state, cartItems: payload }
-        case cartActionTypes.set_isCart_open: return {...state, isCartOpen : payload}
-        default : return state 
+const removeCartItem = (cartItems, productToRemove) => {
+    // if product exists then check for the quantity
+    const existingCartItem = cartItems.find(cartItem => cartItem.id === productToRemove.id)
+    // if quantity is < 0 then remove the product from cart 
+    if (existingCartItem) {
+        if (existingCartItem.quantity === 1) {
+            return cartItems.filter(cartItem => cartItem.id !== productToRemove.id)
+        }
+        else {
+            return cartItems.map(cartItem => cartItem.id === productToRemove.id ? { ...cartItem, quantity: cartItem.quantity - 1 } : cartItem)
+        }
     }
+    // if quantity is > 0 then decerase the quantity by 1 
+    return cartItems
 }
+
+const clearCartItem = (cartItems, productToClear) => {
+    return cartItems.filter(cartItem => cartItem.id !== productToClear.id)
+}
+
+
+const initialState = {
+    isCartOpen: false,
+    cartItems: [],
+}
+
+
+const cartSlice = createSlice({
+    name: "cart",
+    initialState,
+    reducers: {
+        setIsCartOpen: (state, action) => { state.isCartOpen = action.payload },
+        addProductToCart: (state, action) => { state.cartItems = addCartItem(state.cartItems, action.payload) },
+        removeProductFromCart: (state, action) => { state.cartItems = removeCartItem(state.cartItems, action.payload) },
+        clearProductFromCart: (state, action) => { state.cartItems = clearCartItem(state.cartItems, action.payload) },
+        clearCart: (state, action) => { state.cartItems = action.payload }
+    }
+})
+
+export const { setIsCartOpen, addProductToCart, removeProductFromCart, clearProductFromCart, clearCart } = cartSlice.actions
+export const cartReducer = cartSlice.reducer

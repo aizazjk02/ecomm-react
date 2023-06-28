@@ -6,7 +6,7 @@ import CartItem from "../cart-item/cart-item.component"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { selectCartItems, selectIsCartOpen } from "../../store/cart/cart.selectors"
-import { setIsCartOpen } from "../../store/cart/cart.actions"
+import { setIsCartOpen } from "../../store/cart/cart.reducer"
 const CartDropdown = () => {
     // const { cartItems, setIsCartOpen, isCartOpen } = useContext(CartContext)
     const cartItems = useSelector(selectCartItems)
