@@ -12,7 +12,7 @@ const userSlice = createSlice({
             state.currentUser = action.payload
         },
         setOrders(state, action) {
-            state.orders = action.payload
+            state.orders = action.payload.sort((a, b) => new Date(b.createdAt?.seconds * 1000) - new Date(a.createdAt?.seconds * 1000))
         }
 
     }
