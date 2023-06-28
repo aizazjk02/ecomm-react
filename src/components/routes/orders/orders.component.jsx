@@ -37,7 +37,8 @@ const Orders = () => {
     const orders = useSelector(selectUserOrders)
     // const navigate = useNavigate()
     
-    orders.sort((a,b) => new Date(b.createdAt?.seconds * 1000) - new Date(a.createdAt?.seconds * 1000))
+    
+    // orders.sort((a,b) => new Date(a.createdAt?.seconds * 1000) - new Date(b.createdAt?.seconds * 1000))
     return (
         <div className="orders">
             {orders.length >=  1 ? (<h1 className="orders__heading">Your Orders</h1>) : (<h1 className="orders__heading">You dont't have any orders</h1>)}

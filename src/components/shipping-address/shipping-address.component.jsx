@@ -36,7 +36,7 @@ const ShippingAddress = ({setCheckout}) => {
     const handleOrder = async (e) => {
         e.preventDefault()
         await addOrder(formFields, currentUser.uid, cartItems, cartTotal).then(result => {
-            if(result) dispatch(clearCart())
+            // if(result) dispatch(clearCart([]))
             setOrderStatus(result)
         })
     }
