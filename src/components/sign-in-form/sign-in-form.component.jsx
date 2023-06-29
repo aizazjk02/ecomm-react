@@ -24,12 +24,13 @@ const SignInForm = () => {
 
     const handleSubmit = async () => {
         try {
-            await signInAuthUserWithEmailAndPassword(email, password)
-            setFormFields(initialFormFields)
-            navigate("/")
+            await signInAuthUserWithEmailAndPassword(email, password).then(() => {
+                setFormFields(initialFormFields)
+                navigate("/")
+            })
         } catch (error) {
             
-
+            
         }
 
 

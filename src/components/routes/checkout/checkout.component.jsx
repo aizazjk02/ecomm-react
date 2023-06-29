@@ -26,7 +26,7 @@ const Checkout = () => {
         if (!currentUser) {
             navigate("/auth")
         }
-        else if (!cartItems.length) navigate("/")
+        // else if (!cartItems.length) navigate("/")
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cartItems, currentUser])
     return (
