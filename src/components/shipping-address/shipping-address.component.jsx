@@ -1,13 +1,14 @@
 // import FormInput from "../form-input/form-input.component"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Button from "../button/button.component"
 import "./shipping-address.styles.scss"
 // import { useContext } from "react"
 // import { CartContext } from "../../context/cart.context"
 // import { UserContext } from "../../context/user.context"
 import { addOrder } from "../../utils/firebase/firebase.utils"
-
-import { useSelector , useDispatch } from "react-redux"
+import PassMarkIcon from "../../assets/pass_tick.png"
+import CrossFailIcon from "../../assets/fail_cross.png"
+import { useSelector, useDispatch } from "react-redux"
 import { selectCurrentUser } from "../../store/user/user.selector"
 import { selectCartItems, selectCartTotal } from "../../store/cart/cart.selectors"
 import { clearCart } from "../../store/cart/cart.reducer"
@@ -19,11 +20,12 @@ const initialFormFields = {
     state: "",
     pinCode: "",
     phoneNumber: "",
-    paymentMethod:""
+    paymentMethod: ""
 }
 
-const ShippingAddress = ({setCheckout}) => {
+const ShippingAddress = ({ setCheckout }) => {
     // const { currentUser } = useContext(UserContext)
+    const [formErrors, setFormErrors] = useState({})
     const dispatch = useDispatch()
     const currentUser = useSelector(selectCurrentUser)
     // const {cartItems, cartTotal, clearCart} = useContext(CartContext)
@@ -35,17 +37,40 @@ const ShippingAddress = ({setCheckout}) => {
     const [orderStatus, setOrderStatus] = useState(false)
     const handleOrder = async (e) => {
         e.preventDefault()
-        await addOrder(formFields, currentUser.uid, cartItems, cartTotal).then(result => {
-            // if(result) dispatch(clearCart([]))
-            setOrderStatus(result)
-        })
+        if (Object.keys(formErrors).length > 0) return 
+        else {
+
+            await addOrder(formFields, currentUser.uid, cartItems, cartTotal).then(result => {
+                setOrderStatus(result)
+                
+                if (result) dispatch(clearCart([]))
+            })
+        }
     }
 
     const handleOnChange = (e) => {
-        const {id, value} = e.target
-        setFormFields({...formFields, [id] : value})
+        const { id, value } = e.target
+        setFormFields({ ...formFields, [id]: value })
+    }
+
+    const validateForm = () => {
+        const errors = {}
+        if (firstName === "") errors.firstName = "First name is required."
+        if (lastName === "") errors.lastName = "Last name is required."
+        if (city === "") errors.city = "City is required."
+        if (address === "") errors.address = "Address is required."
+        if (state === "") errors.state = "State is required."
+        if (pinCode === "") errors.pinCode = "Pincode is required."
+        else if (pinCode.length > 6) errors.pinCode = "Pincode should be less than 6 digits."
+        if (phoneNumber === "") errors.phoneNumber = "Phone number is required."
+        else if (phoneNumber.length > 10 || phoneNumber.length < 10) errors.phoneNumber = "Phone number should be 10 digits"
+        if (paymentMethod !== "Cash") errors.paymentMethod = "Please select payment method."
+        return errors
     }
     // console.log(formFields)
+    useEffect(() => {
+        setFormErrors(validateForm())
+    }, [formFields])
     return (
         <div className="shipping__address__container">
             {orderStatus ? (<h2>Order Placed!</h2>) : (
@@ -55,19 +80,32 @@ const ShippingAddress = ({setCheckout}) => {
                     <form className="shipping__address__form">
                         <div className="form__input__container">
                             <label htmlFor="firstName">First Name</label>
+
                             <input type="text" id="firstName" onChange={handleOnChange} value={firstName} required />
+
+                            <span className="error">{formErrors.firstName}</span>
                         </div>
                         <div className="form__input__container">
                             <label htmlFor="lastName">Last Name</label>
+
+
                             <input type="text" id="lastName" onChange={handleOnChange} value={lastName} required />
+
+                            <span className="error">{formErrors.lastName}</span>
                         </div>
                         <div className="form__input__container">
                             <label htmlFor="address">Address</label>
+
                             <input type="text" id="address" onChange={handleOnChange} value={address} required />
+
+                            <span className="error">{formErrors.address}</span>
                         </div>
                         <div className="form__input__container">
                             <label htmlFor="city">City</label>
+
                             <input type="text" id="city" onChange={handleOnChange} value={city} required />
+
+                            <span className="error">{formErrors.city}</span>
                         </div>
                         <div className="form__input__container">
                             <label htmlFor="state">State :</label>
@@ -102,14 +140,21 @@ const ShippingAddress = ({setCheckout}) => {
                                 <option value="Uttarakhand">Uttarakhand</option>
                                 <option value="West Bengal">West Bengal</option>
                             </select>
+                            <span className="error">{formErrors.state}</span>
                         </div>
                         <div className="form__input__container">
-                        <label htmlFor="pinCode">Pin Code</label>
-                        <input type="text" id="pinCode" onChange={handleOnChange} value={pinCode} required />
+                            <label htmlFor="pinCode">Pin Code</label>
+
+                            <input type="text" id="pinCode" onChange={handleOnChange} value={pinCode} required />
+                            <span className="error">{formErrors.pinCode}</span>
+
                         </div>
                         <div className="form__input__container">
-                        <label htmlFor="phoneNumber">Phone Number</label>
-                        <input type="text" id="phoneNumber" onChange={handleOnChange} value={phoneNumber} required />
+                            <label htmlFor="phoneNumber">Phone Number</label>
+
+                            <input type="text" id="phoneNumber" onChange={handleOnChange} value={phoneNumber} required />
+
+                            <span className="error">{formErrors.phoneNumber}</span>
                         </div>
                         <div className="form__input__container">
                             <label htmlFor="paymentMethod">Payment Method</label>
@@ -117,12 +162,13 @@ const ShippingAddress = ({setCheckout}) => {
                                 <option value="">Select Payment Method</option>
                                 <option value="Cash">Cash On Delivery</option>
                             </select>
+                            <span className="error">{formErrors.paymentMethod}</span>
                         </div>
                         <Button onClick={handleOrder}>Place Order</Button>
                     </form>
                 </>
             )}
-            
+
         </div>
     )
 }
