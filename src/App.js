@@ -9,7 +9,7 @@ import Orders from "./components/routes/orders/orders.component";
 // import ShippingAddress from "./components/shipping-address/shipping-address.component";
 import { getOrders, onAuthStateChangedListner } from "./utils/firebase/firebase.utils";
 import { useDispatch } from "react-redux";
-import { setCurrentUser, setOrders } from "./store/user/user.actions";
+import { setCurrentUser, setOrders } from "./store/user/user.reducer";
 import OrderDetails from "./components/order-details/order-details";
 const App = () => {
   const dispatch = useDispatch()

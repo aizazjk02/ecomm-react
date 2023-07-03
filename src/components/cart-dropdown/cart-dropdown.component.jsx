@@ -6,7 +6,7 @@ import CartItem from "../cart-item/cart-item.component"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { selectCartItems, selectIsCartOpen } from "../../store/cart/cart.selectors"
-import { setIsCartOpen } from "../../store/cart/cart.actions"
+import { clearCart, setIsCartOpen } from "../../store/cart/cart.reducer"
 const CartDropdown = () => {
     // const { cartItems, setIsCartOpen, isCartOpen } = useContext(CartContext)
     const cartItems = useSelector(selectCartItems)
@@ -26,6 +26,7 @@ const CartDropdown = () => {
             <div className="cart__items">
                 {cartItems.map(item => <CartItem key={item.id} cartItem={item} />)}
             </div>
+            <Button onClick={() => dispatch(clearCart([]))}>Clear Cart</Button>
             <Button onClick={checkoutHandler} >Go To Checkout</Button>
         </div>
     )
